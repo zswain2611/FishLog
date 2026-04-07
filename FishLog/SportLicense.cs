@@ -8,7 +8,7 @@ namespace FishLog
 {
     public class SportLicense : License
     {
-        public SportLicense(DateTime expiry) : base(LicenseType.Sport, expiry) { }
+        public SportLicense() : base(LicenseType.Sport) { }
 
         public override int GetLimit(string species, FMZone zone)
         {

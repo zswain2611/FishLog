@@ -8,7 +8,7 @@ namespace FishLog
 {
     public class ConservationLicense : License
     {
-        public ConservationLicense(DateTime expiry) : base(LicenseType.Conservation, expiry) { }
+        public ConservationLicense() : base(LicenseType.Conservation) { }
 
         public override int GetLimit(string species, FMZone zone)
         {
