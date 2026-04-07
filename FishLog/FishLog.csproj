@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Angler.cs" />
     <Compile Include="Catch.cs" />
     <Compile Include="ConservationLicense.cs" />
     <Compile Include="Enums.cs" />
