@@ -9,6 +9,7 @@
     <RootNamespace>FishLog</RootNamespace>
     <AssemblyName>FishLog</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>8.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -43,9 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConservationLicense.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="License.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SportLicense.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
