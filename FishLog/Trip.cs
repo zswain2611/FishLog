@@ -54,12 +54,13 @@ namespace FishLog
                 else
                     totalReleased++;
             }
-            string summary = $"=== TRIP SUMMARY - {_location} | {_zone}\n";
-            summary += $"Total catches: {_catches.Count} | Kept: {totalKept} | Released: {totalReleased}";
+            string summary = "=== TRIP SUMMARY ===\n\n";
+                 summary += $"{_location} | {_zone}\n\n";
+            summary += $"Total catches: {_catches.Count} | Kept: {totalKept} | Released: {totalReleased}\n";
 
             foreach (Catch c in _catches)
             {
-                summary += $"{c.GetSummary()}\n";
+                summary += $"  {c.GetSummary()}\n";
             }
 
             return summary;
