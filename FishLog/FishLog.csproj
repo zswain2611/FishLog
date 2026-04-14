@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Angler.cs" />
+    <Compile Include="Bass.cs" />
     <Compile Include="Catch.cs" />
     <Compile Include="ConservationLicense.cs" />
     <Compile Include="Enums.cs" />
