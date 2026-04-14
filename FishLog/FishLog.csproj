@@ -55,6 +55,7 @@
     <Compile Include="Species.cs" />
     <Compile Include="SportLicense.cs" />
     <Compile Include="Trip.cs" />
+    <Compile Include="YellowPerch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
