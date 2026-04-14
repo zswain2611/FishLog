@@ -49,6 +49,7 @@
     <Compile Include="Catch.cs" />
     <Compile Include="ConservationLicense.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="LakeTrout.cs" />
     <Compile Include="License.cs" />
     <Compile Include="NorthernPike.cs" />
     <Compile Include="Program.cs" />
