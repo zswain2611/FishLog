@@ -51,6 +51,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="LakeTrout.cs" />
     <Compile Include="License.cs" />
+    <Compile Include="Muskellunge.cs" />
     <Compile Include="NorthernPike.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
