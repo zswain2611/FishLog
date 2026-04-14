@@ -53,6 +53,10 @@ namespace FishLog
             if (_seasonOpen == DateTime.MinValue && _seasonClose == DateTime.MinValue)
                 return true;
 
+            // Open year-round after a specific opening date
+            if (_seasonClose == DateTime.MinValue && _seasonOpen != DateTime.MinValue)
+                return date >= _seasonOpen;
+
             // Check if date is within season
             return date >= _seasonOpen && date <= _seasonClose;
         }
