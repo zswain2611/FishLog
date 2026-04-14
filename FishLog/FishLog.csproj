@@ -52,6 +52,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegulationRule.cs" />
+    <Compile Include="Species.cs" />
     <Compile Include="SportLicense.cs" />
     <Compile Include="Trip.cs" />
   </ItemGroup>
