@@ -8,13 +8,13 @@ namespace FishLog
 {
     public class Catch
     {
-        private string _species;
+        private Species _species;
         private double _lengthCm;
         private double _weightKg;
         private CatchStatus _status;
         private DateTime _time;
 
-        public Catch(string species, double lengthCm, double weightKg, CatchStatus status)
+        public Catch(Species species, double lengthCm, double weightKg, CatchStatus status)
         {
             _species = species;
             _lengthCm = lengthCm;
@@ -23,11 +23,11 @@ namespace FishLog
             _time = DateTime.Now;
         }
 
-        public string GetSpecies() => _species;
+        public Species GetSpecies() => _species;
         public double GetLength() => _lengthCm;
         public double GetWeight()=> _weightKg;
         public CatchStatus GetStatus() => _status;
-        public string GetSummary() => $"{_species} {_lengthCm}cm {_status}";
+        public string GetSummary() => $"{_species.GetName()} {_lengthCm}cm {_status}";
 
 
     }
