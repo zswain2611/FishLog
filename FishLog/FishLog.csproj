@@ -49,6 +49,7 @@
     <Compile Include="ConservationLicense.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="License.cs" />
+    <Compile Include="NorthernPike.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegulationRule.cs" />
