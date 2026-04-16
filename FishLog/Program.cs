@@ -119,13 +119,13 @@ namespace FishLog
             Trip trip = angler.StartTrip(zone.Value, location);
 
             // Catch logging loop
-            LogCatchFlow(trip, angler.GetLicense());
+            LogCatchFlow(trip, angler.GetLicense(), zone.Value);
 
             // Print trip summary
             Console.WriteLine("\n" + trip.GetSummary());
         }
 
-        static void LogCatchFlow(Trip trip, License license)
+        static void LogCatchFlow(Trip trip, License license, FMZone zone)
         {
             bool loggingCatches = true;
 
@@ -144,23 +144,23 @@ namespace FishLog
                 string speciesChoice = Console.ReadLine();
 
                 if (speciesChoice == "7")
-                { 
+                {
                     loggingCatches = false;
                     continue;
                 }
 
-                string species = speciesChoice switch
+                Species species = speciesChoice switch
                 {
-                    "1" => "Walleye",
-                    "2" => "Pike",
-                    "3" => "Bass",
-                    "4" => "Perch",
-                    "5" => "Muskie",
-                    "6" => "LakeTrout",
-                    _ => ""
+                    "1" => new Walleye(),
+                    "2" => new NorthernPike(),
+                    "3" => new Bass(),
+                    "4" => new YellowPerch(),
+                    "5" => new Muskellunge(),
+                    "6" => new LakeTrout(),
+                    _ => null
                 };
 
-                if (species == "")
+                if (species == null)
                 {
                     Console.WriteLine("Invalid species choice. Please try again.");
                     continue;
@@ -181,24 +181,71 @@ namespace FishLog
                     double.TryParse(weightInput, out weight);
                 }
 
-                Console.WriteLine("\nKeep or release?");
-                Console.WriteLine("[1] Keep");
-                Console.WriteLine("[2] Release");
-                Console.Write("> ");
-                string statusChoice = Console.ReadLine();
-
-                CatchStatus status = statusChoice switch
+                CatchStatus? desiredStatus = null;
+                while (desiredStatus == null)
                 {
-                    "1" => CatchStatus.Kept,
-                    "2" => CatchStatus.Released,
-                    _ => CatchStatus.Released
+                    Console.WriteLine("\nKeep or release?");
+                    Console.WriteLine("[1] Keep");
+                    Console.WriteLine("[2] Release");
+                    Console.Write("> ");
+                    string statusChoice = Console.ReadLine();
+
+                    desiredStatus = statusChoice switch
+                    {
+                        "1" => CatchStatus.Kept,
+                        "2" => CatchStatus.Released,
+                        _ => null
+                    };
+
+                    if (desiredStatus  == null)
+                    {
+                        Console.WriteLine("Invalid choice. Please enter [1] or [2].");
+                    }
+                }
+
+                // Create a temporary catch for validation
+                Catch tempCatch = new Catch(species, length, weight, desiredStatus.Value);
+
+                // Get how many of a the current species has been caught so far
+                int keptSoFar = trip.GetKeptCount(species.GetName());
+
+                // Validate the catch
+                ValidationResult result = species.ValidateCatch(tempCatch, license, zone, keptSoFar);
+
+                // Handle validation result
+                if (result == ValidationResult.Legal && desiredStatus.Value == CatchStatus.Kept)
+                {
+                    // Legal and user wants to keep it
+                    trip.LogCatch(tempCatch);
+                    Console.WriteLine($"\n> Logged: {tempCatch.GetSummary()}");
+                }
+                else if (result == ValidationResult.Legal && desiredStatus.Value == CatchStatus.Released)
+                {
+                    // Legal but user chose to release
+                    trip.LogCatch(tempCatch);
+                    Console.WriteLine($"> Logged: {tempCatch.GetSummary()}");
+                }
+                else
+                {
+                    // ILLEGAL and must release
+                    Catch releasedCatch = new Catch(species, length, weight, CatchStatus.Released);
+                    trip.LogCatch(releasedCatch);
+
+                    Console.WriteLine($"\n> ERROR: {GetValidationMessage(result, species.GetName(), length)}");
+                    Console.WriteLine("This fish has been recorded as RELEASED.\n");
+                }
+            }
+
+            static string GetValidationMessage(ValidationResult result, string speciesName, double length)
+            {
+                return result switch
+                {
+                    ValidationResult.OutOfSeason => $"{speciesName} season is currently closed.",
+                    ValidationResult.OverLimit => $"Daily limit reached for {speciesName}.",
+                    ValidationResult.IllegalSize => $"{speciesName} ({length}cm) does not meet size requirements.",
+                    ValidationResult.MustRelease => $"Conservation license holders must release all {speciesName}.",
+                    _ => "Unknown validation error."
                 };
-
-                // Create and log the catch
-                Catch newCatch = new Catch(species , length, weight, status);
-                trip.LogCatch(newCatch);
-
-                Console.WriteLine($"\n Logged: {newCatch.GetSummary()}");
             }
         }
     }
