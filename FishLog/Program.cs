@@ -37,17 +37,25 @@ namespace FishLog
                 switch (choice)
                 {
                     case "1":
+                        Console.Clear();
                         StartTripFlow(angler);
                         break;
                     case "2":
+                        Console.Clear();
                         angler.ViewStats();
+                        Console.WriteLine("\nPress Enter to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
                         break;
                     case "3":
+                        Console.Clear();
                         Console.WriteLine("\nThanks for using FishLog!");
                         running = false;
                         break;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nInvalid choice. Please try again.");
+                        Console.ResetColor();
                         break;
                 }
             }
@@ -76,7 +84,9 @@ namespace FishLog
 
                 if (license == null)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid license choice. Please try again.");
+                    Console.ResetColor();
                 }
             }
 
@@ -85,6 +95,7 @@ namespace FishLog
 
         static void StartTripFlow(Angler angler)
         {
+            Console.Clear();
             Console.WriteLine("\n=== START NEW TRIP ===");
 
             FMZone? zone = null;
@@ -105,15 +116,19 @@ namespace FishLog
 
                 if (zone == null)
                 {
+                    Console.ForegroundColor= ConsoleColor.Red;
                     Console.WriteLine("Invalid zone choice. Please try again.");
+                    Console.ResetColor();
                 }
             }
 
             Console.WriteLine("Enter location (e.g., Lake Nipissing): ");
             string location = Console.ReadLine();
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"\nNOTE: {zone} is part of the Northeast Bait Management Zone.");
             Console.WriteLine("Live or dead baitfish and leeches may not be transported in or out.\n");
+            Console.ResetColor();
 
             // Start the trip
             Trip trip = angler.StartTrip(zone.Value, location);
@@ -123,6 +138,9 @@ namespace FishLog
 
             // Print trip summary
             Console.WriteLine("\n" + trip.GetSummary());
+            Console.WriteLine("\nPress Enter to return to menu...");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         static void LogCatchFlow(Trip trip, License license, FMZone zone)
@@ -162,14 +180,18 @@ namespace FishLog
 
                 if (species == null)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid species choice. Please try again.");
+                    Console.ResetColor();
                     continue;
                 }
 
                 Console.Write("Length (cm): ");
                 if (!double.TryParse(Console.ReadLine(), out double length))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid length. Please enter a number.");
+                    Console.ResetColor();
                     continue;
                 }
 
@@ -199,7 +221,9 @@ namespace FishLog
 
                     if (desiredStatus  == null)
                     {
+                        Console.ForegroundColor= ConsoleColor.Red;
                         Console.WriteLine("Invalid choice. Please enter [1] or [2].");
+                        Console.ResetColor();
                     }
                 }
 
@@ -217,13 +241,17 @@ namespace FishLog
                 {
                     // Legal and user wants to keep it
                     trip.LogCatch(tempCatch);
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"\n> Logged: {tempCatch.GetSummary()}");
+                    Console.ResetColor();
                 }
                 else if (result == ValidationResult.Legal && desiredStatus.Value == CatchStatus.Released)
                 {
                     // Legal but user chose to release
                     trip.LogCatch(tempCatch);
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"> Logged: {tempCatch.GetSummary()}");
+                    Console.ResetColor();
                 }
                 else
                 {
@@ -231,8 +259,10 @@ namespace FishLog
                     Catch releasedCatch = new Catch(species, length, weight, CatchStatus.Released);
                     trip.LogCatch(releasedCatch);
 
+                    Console.ForegroundColor= ConsoleColor.Red;
                     Console.WriteLine($"\n> ERROR: {GetValidationMessage(result, species.GetName(), length)}");
                     Console.WriteLine("This fish has been recorded as RELEASED.\n");
+                    Console.ResetColor();
                 }
             }
 
