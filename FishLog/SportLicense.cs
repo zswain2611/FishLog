@@ -6,10 +6,20 @@ using System;
 
 namespace FishLog
 {
+    /// <summary>
+    /// Represents a Sport fishing license with higher catch limits
+    /// </summary>
     public class SportLicense : License
     {
+        /// <summary>
+        /// Initializes a new Sport fishing license
+        /// </summary>
         public SportLicense() : base(LicenseType.Sport) { }
 
+        /// <summary>
+        /// Gets the daily catch limit for Sport license
+        /// </summary>
+        /// <returns>Daily catch limit</returns>
         public override int GetLimit(string species, FMZone zone)
         {
             return species.ToLower() switch

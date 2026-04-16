@@ -6,8 +6,14 @@ using System;
 
 namespace FishLog
 {
+    /// <summary>
+    /// Represents a yellow perch with open season and high catch limits
+    /// </summary>
     public class YellowPerch : Species
     {
+        /// <summary>
+        /// Initializes a new yellow perch with FMZ 10 and FMZ 11 regulation rules
+        /// </summary>
         public YellowPerch() : base("Yellow Perch")
         {
             // FMZ 10 Regulations
@@ -28,6 +34,14 @@ namespace FishLog
             );
         }
 
+        /// <summary>
+        /// Validates a yellow perch catch against zone-specific regulations
+        /// </summary>
+        /// <param name="fish">The catch to validate</param>
+        /// <param name="license">The angler's license type</param>
+        /// <param name="zone">The fishing management zone</param>
+        /// <param name="keptSoFar">Number of yellow perch already kept on this trip</param>
+        /// <returns>Legal if catch meets all requirements, otherwise specific violation reason</returns>
         public override ValidationResult ValidateCatch(Catch fish, License license, FMZone zone, int keptSoFar)
         {
             RegulationRule rule = GetRule(zone);

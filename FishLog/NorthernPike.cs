@@ -6,8 +6,14 @@ using System;
 
 namespace FishLog
 {
+    /// <summary>
+    /// Represents a northern pike with zone-specific size and season restrictions
+    /// </summary>
     public class NorthernPike : Species
     {
+        /// <summary>
+        /// Initializes a new northern pike with FMZ 10 and FMZ 11 regulation rules
+        /// </summary>
         public NorthernPike() : base("Northern Pike")
         {
             // FMZ 10 Regulations
@@ -32,6 +38,14 @@ namespace FishLog
             );
         }
 
+        /// <summary>
+        /// Validates a northern pike catch against zone-specific regulations
+        /// </summary>
+        /// <param name="fish">The catch to validate</param>
+        /// <param name="license">The angler's license type</param>
+        /// <param name="zone">The fishing management zone</param>
+        /// <param name="keptSoFar">Number of northern pike already kept on this trip</param>
+        /// <returns>Legal if catch meets all requirements, otherwise specific violation reason</returns>
         public override ValidationResult ValidateCatch(Catch fish, License license, FMZone zone, int keptSoFar)
         {
             RegulationRule rule = GetRule(zone);

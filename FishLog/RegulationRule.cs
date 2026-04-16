@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace FishLog
 {
+    /// <summary>
+    /// Stores fishing regulation data for a specific species in a specific FMZ
+    /// </summary>
     public class RegulationRule
     {
         private DateTime _seasonOpen;
@@ -23,6 +26,18 @@ namespace FishLog
         private double? _slotMaxCm;
         private int? _maxOverSizeCount;
 
+        /// <summary>
+        /// Creates a new regulation rule with season dates, limits and size restrictions
+        /// </summary>
+        /// <param name="seasonOpen">Season opening date (MinValue for year-round)</param>
+        /// <param name="seasonClose">Season closing date (MinValue for no close)</param>
+        /// <param name="sportLimit">Daily limit for Sport License</param>
+        /// <param name="conservLimit">Daily limit for Conservation License</param>
+        /// <param name="minSizeCm">Minimum legal size in cm (null if none)</param>
+        /// <param name="maxSizeCm">Maximum legal size in cm (null if none)</param>
+        /// <param name="slotMinCm">Protected slot minimum size (null if no slot)</param>
+        /// <param name="slotMaxCm">Protected slot maximum size (null if no slot)</param>
+        /// <param name="maxOverSizeCount">Maximum number of oversize fish allowed (null if no limit)</param>
         public RegulationRule(
             DateTime seasonOpen,
             DateTime seasonClose,
@@ -47,6 +62,11 @@ namespace FishLog
         }
 
         
+        /// <summary>
+        /// Checks if the fishing season is open for the given date
+        /// </summary>
+        /// <param name="date">The date to check</param>
+        /// <returns>True if season is open, false if closed</returns>
         public bool IsOpen(DateTime date)
         {
             // Open all year if both are default
@@ -61,6 +81,11 @@ namespace FishLog
             return date >= _seasonOpen && date <= _seasonClose;
         }
 
+        /// <summary>
+        /// Validates if a fish's length meets size requirements
+        /// </summary>
+        /// <param name="lengthCm">Length of the fish in cm</param>
+        /// <returns>True if size is legal, false if not</returns>
         public bool PassesSizeCheck(double lengthCm)
         {
             // Check min size
@@ -81,6 +106,11 @@ namespace FishLog
             return true; // Passed all checks
         }
 
+        /// <summary>
+        /// Gets the daily catch limit for the specified license type
+        /// </summary>
+        /// <param name="type">The license type (sport or Conservation)</param>
+        /// <returns>Daily catch limit for that license</returns>
         public int GetLimit(LicenseType type)
         {
             return type == LicenseType.Sport ? _sportLimit : _conservLimit;

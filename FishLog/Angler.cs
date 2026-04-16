@@ -7,12 +7,20 @@ using System.Collections.Generic;
 
 namespace FishLog
 {
+    /// <summary>
+    /// Represents an angler with license information and trip history
+    /// </summary>
     public class Angler
     {
         private string _name;
         private License _license;
         private List<Trip> _trips;
 
+        /// <summary>
+        /// Creates a new angler with the specified name and license
+        /// </summary>
+        /// <param name="name">The angler's name</param>
+        /// <param name="license">The angler's fishing license</param>
         public Angler(string name, License license)
         {
             _name = name;
@@ -20,6 +28,12 @@ namespace FishLog
             _trips = new List<Trip>();
         }
 
+        /// <summary>
+        /// Starts a new fishing trip in the specified zone and location
+        /// </summary>
+        /// <param name="zone">The fishing management zone</param>
+        /// <param name="location">The location name (e.g., "Lake Nipissing")</param>
+        /// <returns>The newly created trip</returns>
         public Trip StartTrip(FMZone zone, string location)
         {
             Trip newTrip = new Trip(zone, location);
@@ -27,9 +41,21 @@ namespace FishLog
             return newTrip;
         }
 
+        /// <summary>
+        /// Gets the angler's name
+        /// </summary>
+        /// <returns>The angler's name</returns>
         public string GetName() => _name;
+
+        /// <summary>
+        /// Gets the angler's fishing license
+        /// </summary>
+        /// <returns>The license object</returns>
         public License GetLicense() => _license;
 
+        /// <summary>
+        /// Displays statistics for this angler including species breakdown across all trips
+        /// </summary>
         public void ViewStats()
         {
             Console.WriteLine("\n=== ANGLER STATS ===");
