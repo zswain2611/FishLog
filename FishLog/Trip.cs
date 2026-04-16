@@ -33,7 +33,7 @@ namespace FishLog
             int count = 0;
             foreach (Catch c in _catches)
             {
-                if (c.GetSpecies().ToLower() == species.ToLower() &&
+                if (c.GetSpecies().GetName().ToLower() == species.ToLower() &&
                     c.GetStatus() == CatchStatus.Kept)
                 {
                     count++;
