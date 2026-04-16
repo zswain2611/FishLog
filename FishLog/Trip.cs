@@ -65,5 +65,53 @@ namespace FishLog
 
             return summary;
         }
+
+        /// <summary>
+        /// Gets the total number of kept catches on this trip
+        /// </summary>
+        /// <returns></returns>
+        public int GetTotalCatches()
+        {
+            return _catches.Count;
+        }
+
+        /// <summary>
+        /// Gets the total number of kept catches on this trip
+        /// </summary>
+        /// <returns></returns>
+        public int GetTotalKept()
+        {
+            int count = 0;
+            foreach (Catch c in _catches)
+            {
+                if (c.GetStatus() == CatchStatus.Kept)
+                    count++;
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Gets the total number of released catches on this trip
+        /// </summary>
+        /// <returns></returns>
+        public int GetTotalReleased()
+        {
+            int count = 0;
+            foreach (Catch c in _catches)
+            {
+                if (c.GetStatus() == CatchStatus.Released)
+                    count++;
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Get all the catches from this trip
+        /// </summary>
+        /// <returns></returns>
+        public List<Catch> GetAllCatches()
+        {
+            return _catches;
+        }
     }
 }

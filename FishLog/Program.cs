@@ -28,7 +28,7 @@ namespace FishLog
             {
                 Console.WriteLine("\n=== MAIN MENU ===");
                 Console.WriteLine("[1] Start new trip");
-                Console.WriteLine("[2] View stats (Feature coming soon!)");
+                Console.WriteLine("[2] View stats");
                 Console.WriteLine("[3] Quit");
                 Console.Write("> ");
 
@@ -40,7 +40,7 @@ namespace FishLog
                         StartTripFlow(angler);
                         break;
                     case "2":
-                        Console.WriteLine("\n Stats feature coming soon!");
+                        angler.ViewStats();
                         break;
                     case "3":
                         Console.WriteLine("\nThanks for using FishLog!");
